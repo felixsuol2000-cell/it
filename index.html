@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="kz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IT Support - Digital Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #113066;
+            --gold: #dbc38f;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --dark: #0a1f42;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0a1f42 0%, #113066 50%, #1a4078 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(219, 195, 143, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(219, 195, 143, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .tech-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 6s linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 30%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 50%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 70%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 90%; animation-delay: 4s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 430px;
+            width: 100%;
+            background: rgba(248, 249, 250, 0.98);
+            border: 2px solid var(--gold);
+            box-shadow: 
+                inset 0 0 0 1px rgba(219, 195, 143, 0.3),
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(219, 195, 143, 0.2);
+            border-radius: 20px;
+            padding: 32px 24px;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--gold), var(--primary), var(--gold));
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 0.5; }
+        }
+
+        .lang-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 26px;
+            animation: fadeDown 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lang-btn {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            padding: 8px 22px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: var(--gold);
+            transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .lang-btn.active::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .lang-btn.active {
+            color: var(--primary);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(219, 195, 143, 0.4);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 28px;
+            animation: zoomRotate 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes zoomRotate {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .logo img {
+            max-width: 220px;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(17, 48, 102, 0.3));
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .photo-wrapper {
+            margin-bottom: 20px;
+            animation: photoReveal 1s ease-out 0.6s both;
+            position: relative;
+        }
+
+        @keyframes photoReveal {
+            from {
+                opacity: 0;
+                transform: scale(0.6) rotateY(90deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .photo-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 160px;
+            height: 160px;
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate 10s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gold);
+            box-shadow: 
+                0 0 0 2px var(--primary),
+                0 12px 35px rgba(17, 48, 102, 0.4);
+            position: relative;
+        }
+
+        .name {
+            font-family: 'Roboto', sans-serif;
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            animation: textGlitch 0.6s ease-out 0.8s both;
+        }
+
+        @keyframes textGlitch {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        .phone {
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: textGlitch 0.6s ease-out 0.9s both;
+        }
+
+        .schedule {
+            font-family: 'Roboto', sans-serif;
+            font-size: 13px;
+            color: #5a5a5a;
+            margin-bottom: 10px;
+            font-weight: 500;
+            animation: textGlitch 0.6s ease-out 1s both;
+        }
+
+        .position {
+            font-family: 'Roboto', sans-serif;
+            font-size: 15px;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+            animation: textGlitch 0.6s ease-out 1.1s both;
+        }
+
+        .tech-divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 24px auto;
+            position: relative;
+            animation: expandDivider 0.8s ease-out 1.2s both;
+        }
+
+        @keyframes expandDivider {
+            from { width: 0; opacity: 0; }
+            to { width: 80px; opacity: 1; }
+        }
+
+        .tech-divider::before,
+        .tech-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .tech-divider::before { left: -10px; }
+        .tech-divider::after { right: -10px; }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 28px;
+            animation: fadeUp 0.6s ease-out 1.3s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-btn {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 22px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, var(--gold), var(--gold));
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+            z-index: 0;
+        }
+
+        .action-btn:active::before {
+            width: 300%;
+            height: 300%;
+        }
+
+        .action-btn:active {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 8px 20px rgba(219, 195, 143, 0.4),
+                0 0 30px rgba(219, 195, 143, 0.3);
+            border-color: var(--gold);
+        }
+
+        .action-btn i {
+            font-size: 28px;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .action-btn:active i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .action-btn span {
+            font-family: 'Roboto', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 380px) {
+            .container {
+                padding: 26px 18px;
+            }
+            .buttons-grid {
+                gap: 12px;
+            }
+            .action-btn {
+                padding: 18px 10px;
+            }
+            .action-btn i {
+                font-size: 24px;
+            }
+            .action-btn span {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tech-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="kz">KZ</button>
+            <button class="lang-btn" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+
+        <div class="logo">
+            <img src="logo.png" alt="IT Support">
+        </div>
+
+        <div class="profile-section">
+            <div class="photo-wrapper">
+                <img class="photo" src="baxa.jpg" alt="IT Specialist">
+            </div>
+
+            <div class="name" data-text="name">Инфрақұрылымдық шешімдер басқармасы</div>
+            <div class="phone"></div>
+            <div class="schedule" data-text="schedule">Жұмыс уақыты: Дс-Жм | 9:00–18:30</div>
+            <div class="position" data-text="position">Техникалық қолдау тобының бас маман</div>
+        </div>
+
+        <div class="tech-divider"></div>
+
+        <div class="buttons-grid">
+            <a class="action-btn" href="https://korkyt.edu.kz/page/184" target="_blank">
+                <i class="fa-solid fa-globe"></i>
+                <span data-text="website">Сайт</span>
+            </a>
+
+            <a class="action-btn" href="tel:+77770583434">
+                <i class="fa-solid fa-phone"></i>
+                <span data-text="call">Қоңырау</span>
+            </a>
+
+            <a class="action-btn" href="#">
+                <i class="fa-solid fa-star"></i>
+                <span data-text="review">Пікір</span>
+            </a>
+
+            <a class="action-btn" href="#">
+                <i class="fa-brands fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+
+            <a class="action-btn" href="#">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+
+            <a class="action-btn" href="#">
+                <i class="fa-brands fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            kz: {
+                name: 'Инфрақұрылымдық шешімдер басқармасы',
+                schedule: 'Жұмыс уақыты: Дс-Жм | 9:00–18:30',
+                position: 'Техникалық қолдау тобының бас маман',
+                website: 'Сайт',
+                call: 'Қоңырау',
+                review: 'Пікір'
+            },
+            ru: {
+                name: 'Управление инфраструктурных решений',
+                schedule: 'Работаем Пн-Пя | 9:00–18:30',
+                position: 'Главный специалист группы технической поддержки',
+                website: 'Сайт',
+                call: 'Позвонить',
+                review: 'Отзыв'
+            },
+            en: {
+                name: 'Infrastructure Solutions Department',
+                schedule: 'We work Mon-Fri | 9:00–18:30',
+                position: 'Lead Technical Support Specialist',
+                website: 'Website',
+                call: 'Call',
+                review: 'Review'
+            }
+        };
+
+        let currentLang = 'kz';
+
+        const langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLang = btn.dataset.lang;
+                updateTexts();
+            });
+        });
+
+        function updateTexts() {
+            const elements = document.querySelectorAll('[data-text]');
+            elements.forEach(el => {
+                const key = el.dataset.text;
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        if (!/Mobi|Android/i.test(navigator.userAgent)) {
+            document.body.style.background = 'linear-gradient(135deg, #0a1f42 0%, #113066 50%, #1a4078 100%)';
+        }
+    </script>
+</body>
+</html>
