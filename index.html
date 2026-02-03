@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #113066;
@@ -33,6 +33,44 @@
             padding: 20px;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Тонкий скроллбар для мобильных устройств */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                align-items: flex-start;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                /* Firefox */
+                scrollbar-width: thin;
+                scrollbar-color: var(--gold) rgba(17, 48, 102, 0.3);
+            }
+
+            /* Стилизация скроллбара для WebKit браузеров (Chrome, Safari, Edge) */
+            body::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            body::-webkit-scrollbar-track {
+                background: rgba(17, 48, 102, 0.3);
+                border-radius: 10px;
+            }
+
+            body::-webkit-scrollbar-thumb {
+                background: var(--gold);
+                border-radius: 10px;
+            }
+
+            body::-webkit-scrollbar-thumb:hover {
+                background: rgba(219, 195, 143, 0.8);
+            }
+
+            .container {
+                margin-bottom: 20px;
+                padding-bottom: 32px;
+            }
         }
 
         body::before {
@@ -111,6 +149,7 @@
             position: relative;
             z-index: 1;
             animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
         }
 
         @keyframes slideIn {
@@ -143,12 +182,123 @@
             50% { opacity: 0.5; }
         }
 
+        .binary-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.06;
+            z-index: 0;
+        }
+
+        .binary-column {
+            position: absolute;
+            top: -100%;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 12px;
+            color: var(--primary);
+            animation: binaryFall 8s linear infinite;
+            white-space: nowrap;
+        }
+
+        .binary-column:nth-child(1) { left: 5%; animation-delay: 0s; }
+        .binary-column:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .binary-column:nth-child(3) { left: 35%; animation-delay: 4s; }
+        .binary-column:nth-child(4) { left: 50%; animation-delay: 1s; }
+        .binary-column:nth-child(5) { left: 65%; animation-delay: 3s; }
+        .binary-column:nth-child(6) { left: 80%; animation-delay: 5s; }
+        .binary-column:nth-child(7) { left: 95%; animation-delay: 6s; }
+
+        @keyframes binaryFall {
+            to {
+                top: 100%;
+            }
+        }
+
+        .circuit-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: var(--gold);
+        }
+
+        .circuit-h1 {
+            top: 15%;
+            left: 0;
+            width: 30%;
+            height: 2px;
+        }
+
+        .circuit-v1 {
+            top: 15%;
+            left: 30%;
+            width: 2px;
+            height: 20%;
+        }
+
+        .circuit-h2 {
+            top: 35%;
+            left: 30%;
+            width: 40%;
+            height: 2px;
+        }
+
+        .circuit-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        .circuit-dot:nth-child(1) { top: 14%; left: 29%; }
+        .circuit-dot:nth-child(2) { top: 34%; left: 29%; }
+        .circuit-dot:nth-child(3) { top: 34%; left: 69%; }
+
+        @keyframes pulse-dot {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .code-snippet {
+            position: absolute;
+            top: 60%;
+            right: 5%;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 10px;
+            color: var(--primary);
+            opacity: 0.1;
+            line-height: 1.4;
+            transform: rotate(-5deg);
+        }
+
         .lang-switcher {
             display: flex;
             justify-content: center;
             gap: 12px;
             margin-bottom: 26px;
             animation: fadeDown 0.6s ease-out 0.2s both;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes fadeDown {
@@ -208,6 +358,8 @@
             text-align: center;
             margin-bottom: 28px;
             animation: zoomRotate 0.8s ease-out 0.4s both;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes zoomRotate {
@@ -227,26 +379,73 @@
             filter: drop-shadow(0 4px 8px rgba(17, 48, 102, 0.3));
         }
 
-        .profile-section {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .photo-wrapper {
-            margin-bottom: 20px;
-            animation: photoReveal 1s ease-out 0.6s both;
+        .slider-container {
             position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            animation: zoomIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
+            z-index: 2;
         }
 
-        @keyframes photoReveal {
+        @keyframes zoomIn {
             from {
                 opacity: 0;
-                transform: scale(0.6) rotateY(90deg);
+                transform: scale(0.7);
             }
             to {
                 opacity: 1;
-                transform: scale(1) rotateY(0deg);
+                transform: scale(1);
             }
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a4078 100%);
+            padding: 20px;
+            position: relative;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(219, 195, 143, 0.05) 20px,
+                    rgba(219, 195, 143, 0.05) 40px
+                );
+            pointer-events: none;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .photo-wrapper {
+            margin-bottom: 0;
+            position: relative;
         }
 
         .photo-wrapper::before {
@@ -268,6 +467,25 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
+        .photo-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 170px;
+            height: 170px;
+            border: 2px dashed var(--white);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate-reverse 15s linear infinite;
+            opacity: 0.2;
+        }
+
+        @keyframes rotate-reverse {
+            from { transform: translate(-50%, -50%) rotate(360deg); }
+            to { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+
         .photo {
             width: 150px;
             height: 150px;
@@ -276,8 +494,64 @@
             border: 4px solid var(--gold);
             box-shadow: 
                 0 0 0 2px var(--primary),
-                0 12px 35px rgba(17, 48, 102, 0.4);
+                0 12px 35px rgba(0, 0, 0, 0.5);
             position: relative;
+        }
+
+        .slide-icon {
+            font-size: 60px;
+            color: var(--gold);
+            margin-bottom: 15px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .slide-title {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide-text {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 600;
+            line-height: 1.5;
+            max-width: 280px;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(219, 195, 143, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 2;
         }
 
         .name {
@@ -339,6 +613,7 @@
             margin: 24px auto;
             position: relative;
             animation: expandDivider 0.8s ease-out 1.2s both;
+            z-index: 2;
         }
 
         @keyframes expandDivider {
@@ -356,6 +631,7 @@
             background: var(--gold);
             border-radius: 50%;
             transform: translateY(-50%);
+            animation: pulse-dot 2s ease-in-out infinite;
         }
 
         .tech-divider::before { left: -10px; }
@@ -367,6 +643,8 @@
             gap: 14px;
             margin-top: 28px;
             animation: fadeUp 0.6s ease-out 1.3s both;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes fadeUp {
@@ -448,8 +726,12 @@
         }
 
         @media (max-width: 380px) {
+            body {
+                padding: 15px;
+            }
             .container {
                 padding: 26px 18px;
+                padding-bottom: 32px;
             }
             .buttons-grid {
                 gap: 12px;
@@ -462,6 +744,15 @@
             }
             .action-btn span {
                 font-size: 10px;
+            }
+            .slider-container {
+                height: 200px;
+            }
+            .slide-title {
+                font-size: 18px;
+            }
+            .slide-text {
+                font-size: 13px;
             }
         }
     </style>
@@ -476,6 +767,31 @@
     </div>
 
     <div class="container">
+        <div class="binary-rain">
+            <div class="binary-column">01001001010<br>11010001101<br>00110100110<br>10101110010<br>01100101011</div>
+            <div class="binary-column">11001010110<br>00101101001<br>10110010101<br>01001110110<br>11010101001</div>
+            <div class="binary-column">01110101010<br>10011001101<br>01100110010<br>11001011010<br>00101101101</div>
+            <div class="binary-column">10101100101<br>01010011010<br>11001101001<br>00110101110<br>10100110101</div>
+            <div class="binary-column">01101001011<br>10010110100<br>01101011001<br>11010100110<br>00111001101</div>
+            <div class="binary-column">11010101001<br>00101110010<br>10110101100<br>01001100111<br>11010011010</div>
+            <div class="binary-column">00110110101<br>10101001110<br>01100111001<br>11001010110<br>01010101100</div>
+        </div>
+
+        <div class="circuit-lines">
+            <div class="circuit-line circuit-h1"></div>
+            <div class="circuit-line circuit-v1"></div>
+            <div class="circuit-line circuit-h2"></div>
+            <div class="circuit-dot"></div>
+            <div class="circuit-dot"></div>
+            <div class="circuit-dot"></div>
+        </div>
+
+        <div class="code-snippet">
+&lt;div class="tech"&gt;<br>
+  &lt;code&gt;IT&lt;/code&gt;<br>
+&lt;/div&gt;
+        </div>
+
         <div class="lang-switcher">
             <button class="lang-btn active" data-lang="kz">KZ</button>
             <button class="lang-btn" data-lang="ru">RU</button>
@@ -486,12 +802,48 @@
             <img src="logo.png" alt="IT Support">
         </div>
 
-        <div class="profile-section">
-            <div class="photo-wrapper">
-                <img class="photo" src="baxa.jpg" alt="IT Specialist">
+        <div class="slider-container">
+            <div class="slider-wrapper" id="sliderWrapper">
+                <div class="slide">
+                    <div class="slide-content">
+                        <div class="photo-wrapper">
+                            <img class="photo" src="baxa.jpg" alt="IT Specialist">
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="slide-content">
+                        <i class="fa-solid fa-server slide-icon"></i>
+                        <div class="slide-title" data-text="slide1_title">Инфрақұрылым</div>
+                        <div class="slide-text" data-text="slide1_text">Кәсіби IT шешімдер және қолдау</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="slide-content">
+                        <i class="fa-solid fa-headset slide-icon"></i>
+                        <div class="slide-title" data-text="slide2_title">Техникалық қолдау</div>
+                        <div class="slide-text" data-text="slide2_text">24/7 сапалы техникалық қызмет көрсету</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="slide-content">
+                        <i class="fa-solid fa-shield-halved slide-icon"></i>
+                        <div class="slide-title" data-text="slide3_title">Сенімділік</div>
+                        <div class="slide-text" data-text="slide3_text">Сіздің деректеріңіз қауіпсіз</div>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="name" data-text="name">Инфрақұрылымдық шешімдер басқармасы</div>
+        <div class="slider-dots" id="sliderDots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+        </div>
+
+        <div class="profile-section">
+            <div class="name" data-text="name">Жұмаділла Бақытжан Рахматуллаұлы</div>
             <div class="phone"></div>
             <div class="schedule" data-text="schedule">Жұмыс уақыты: Дс-Жм | 9:00–18:30</div>
             <div class="position" data-text="position">Техникалық қолдау тобының бас маманы</div>
@@ -520,7 +872,7 @@
                 <span>TikTok</span>
             </a>
 
-            <a class="action-btn" href="#">
+            <a class="action-btn" href="https://wa.me/7770583434">
                 <i class="fa-brands fa-whatsapp"></i>
                 <span>WhatsApp</span>
             </a>
@@ -535,34 +887,58 @@
     <script>
         const translations = {
             kz: {
-                name: 'Инфрақұрылымдық шешімдер басқармасы',
+                name: 'Жұмаділла Бақытжан Рахматуллаұлы',
                 schedule: 'Жұмыс уақыты: Дс-Жм | 9:00–18:30',
                 position: 'Техникалық қолдау тобының бас маманы',
                 website: 'Сайт',
                 call: 'Қоңырау',
-                review: 'Пікір'
+                review: 'Пікір',
+                slide1_title: 'Инфрақұрылым',
+                slide1_text: 'Кәсіби IT шешімдер және қолдау',
+                slide2_title: 'Техникалық қолдау',
+                slide2_text: '24/7 сапалы техникалық қызмет көрсету',
+                slide3_title: 'Сенімділік',
+                slide3_text: 'Сіздің деректеріңіз қауіпсіз'
             },
             ru: {
-                name: 'Управление инфраструктурных решений',
-                schedule: 'Работаем Пн-Пя | 9:00–18:30',
+                name: 'Жумадилла Бакытжан Рахматуллаевич',
+                schedule: 'Работаем Пн-Пт | 9:00–22:18:30',
                 position: 'Главный специалист группы технической поддержки',
                 website: 'Сайт',
                 call: 'Позвонить',
-                review: 'Отзыв'
+                review: 'Отзыв',
+                slide1_title: 'Инфраструктура',
+                slide1_text: 'Профессиональные IT решения и поддержка',
+                slide2_title: 'Техподдержка',
+                slide2_text: 'Качественное обслуживание 24/7',
+                slide3_title: 'Надежность',
+                slide3_text: 'Ваши данные в безопасности'
             },
             en: {
-                name: 'Infrastructure Solutions Department',
-                schedule: 'We work Mon-Fri | 9:00–18:30',
+                name: 'Zhumadilla Bakytzhan Rakhmatullauly',
+                schedule: 'We work Mon-Fri | 9:00–22:18:30',
                 position: 'Lead Technical Support Specialist',
                 website: 'Website',
                 call: 'Call',
-                review: 'Review'
+                review: 'Review',
+                slide1_title: 'Infrastructure',
+                slide1_text: 'Professional IT solutions and support',
+                slide2_title: 'Tech Support',
+                slide2_text: 'Quality service 24/7',
+                slide3_title: 'Reliability',
+                slide3_text: 'Your data is secure'
             }
         };
 
         let currentLang = 'kz';
+        let currentSlide = 0;
+        const totalSlides = 4;
+        let autoSlideInterval;
 
         const langBtns = document.querySelectorAll('.lang-btn');
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const dots = document.querySelectorAll('.dot');
+
         langBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 langBtns.forEach(b => b.classList.remove('active'));
@@ -582,11 +958,67 @@
             });
         }
 
+        function goToSlide(index) {
+            currentSlide = index;
+            sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            goToSlide(currentSlide);
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 3000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slideIndex = parseInt(dot.dataset.slide);
+                goToSlide(slideIndex);
+                stopAutoSlide();
+                startAutoSlide();
+            });
+        });
+
+        const sliderContainer = document.querySelector('.slider-container');
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        sliderContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoSlide();
+        });
+
+        sliderContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+            startAutoSlide();
+        });
+
+        function handleSwipe() {
+            if (touchStartX - touchEndX > 50) {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                goToSlide(currentSlide);
+            } else if (touchEndX - touchStartX > 50) {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                goToSlide(currentSlide);
+            }
+        }
+
         if (!/Mobi|Android/i.test(navigator.userAgent)) {
             document.body.style.background = 'linear-gradient(135deg, #0a1f42 0%, #113066 50%, #1a4078 100%)';
         }
+
+        startAutoSlide();
     </script>
 </body>
-
 </html>
-
